@@ -14,11 +14,13 @@ Here are the prerequisites for this test framework setup :
     
     - Test script includes testNg Annotations for organizing the test step and to take care of prerequisites.
 
+    - For execution TestNG report is used.
+
 Dependent packages for the setup are marked in the pom file. 
-https://github.com/arunNCode/testAppAutomation/blob/master/pom.xml
+https://github.com/arunNCode/Amazon.com.Test/blob/master/pom.xml
 
 Sample test suite file
-https://github.com/arunNCode/testAppAutomation/blob/master/src/test/java/testng-suite.xml
+https://github.com/arunNCode/Amazon.com.Test/blob/master/src/test/java/testng-suite.xml
 
 Test Data - Input data for the test scripts are fetched from the test data excel. Based on the modules we can have multiple sheets used for organizing the input data
 
