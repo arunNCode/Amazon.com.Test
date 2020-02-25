@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Amazon.com]">
+  <listeners>
+    <listener class-name="Utils.TestListener"/>
+    <listener class-name="Utils.CustomReporter"/>
+  </listeners>
+  <test name="ProductPurchase(failed)">
+    <classes>
+      <class name="amazonApp.mobileAppTest.Purchase">
+        <methods>
+          <include name="changeCountrySettings"/>
+          <include name="buyProduct"/>
+          <include name="initialize"/>
+          <include name="testDataInput"/>
+        </methods>
+      </class> <!-- amazonApp.mobileAppTest.Purchase -->
+    </classes>
+  </test> <!-- ProductPurchase(failed) -->
+</suite> <!-- Failed suite [Amazon.com] -->

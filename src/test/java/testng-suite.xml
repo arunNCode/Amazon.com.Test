@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Amazon.com">
+	<listeners>
+	    <listener class-name="Utils.TestListener"/>
+       <listener class-name="Utils.CustomReporter"/>
+  </listeners> 
+  <test verbose="2" name="ProductPurchase">
+    <classes>
+      <class name="amazonApp.mobileAppTest.Purchase"/>
+    </classes>
+  </test> <!-- Default test -->
+</suite> <!-- Default suite -->
