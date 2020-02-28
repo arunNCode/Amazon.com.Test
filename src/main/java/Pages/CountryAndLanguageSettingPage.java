@@ -58,6 +58,7 @@ public class CountryAndLanguageSettingPage extends BasePage {
 	    
 	}
 	   public void selectDone() {
+		   explicitWait(doneButton);
 	   click(doneButton);
 	    
 	}

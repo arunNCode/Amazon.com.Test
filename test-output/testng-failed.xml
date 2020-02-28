@@ -10,9 +10,11 @@
       <class name="amazonApp.mobileAppTest.Purchase">
         <methods>
           <include name="changeCountrySettings"/>
+          <include name="afterSuite"/>
+          <include name="setInputData"/>
           <include name="buyProduct"/>
-          <include name="initialize"/>
-          <include name="testDataInput"/>
+          <include name="logSetup"/>
+          <include name="init"/>
         </methods>
       </class> <!-- amazonApp.mobileAppTest.Purchase -->
     </classes>

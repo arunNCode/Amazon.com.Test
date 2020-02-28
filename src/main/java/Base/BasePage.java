@@ -13,17 +13,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 /** 
- * Base page class to hold common methods which can be used across other page classes 
+ * Base page to hold common methods which can be used across other page classes 
  */
 public abstract class BasePage {
-    private static final Exception Error = null;
-	@SuppressWarnings("rawtypes")
+    @SuppressWarnings("rawtypes")
 	protected  static AppiumDriver driver;
     
     /**
@@ -32,7 +33,7 @@ public abstract class BasePage {
      */
    protected BasePage(AppiumDriver driver){
        this.driver = driver;
-       PageFactory.initElements(new AppiumFieldDecorator(driver, 50, TimeUnit.SECONDS), this);
+       PageFactory.initElements(new AppiumFieldDecorator(driver, 30, TimeUnit.SECONDS), this);
    }
    protected void sendKeysToElement(String input, WebElement element,Boolean clearFlag)
    {    if(clearFlag == true)
@@ -45,10 +46,20 @@ public abstract class BasePage {
     * @param element - element reference
     */
    public static void explicitWait(WebElement element ){
-             WebDriverWait wait = new WebDriverWait(driver,15);
+             WebDriverWait wait = new WebDriverWait(driver,30);
     wait.until(ExpectedConditions.elementToBeClickable(element));
         
    }
+   
+   /**
+    * method to wait until element is displayed
+    * @param element - element reference
+    */
+   public static void waitUntilVisible(WebElement element ){
+	   
+	   WebDriverWait wait = new WebDriverWait(driver,30);
+	      wait.until(ExpectedConditions.visibilityOf(element));
+          }
    /**
     * method to swipe to the bottom of current view port 
     */
@@ -69,7 +80,8 @@ public abstract class BasePage {
     * @param element Element to be clicked 
     */
    protected void click(WebElement element){
-  element.click();}
+	   waitUntilVisible(element);
+	   element.click();}
    
    /**
     * method to get text from screen
@@ -99,29 +111,20 @@ return value;}
    return element.isDisplayed();
    }
    /**
-    * method to capture screenshot from app
+    * method to capture screenshot during execution
+    * the screenshot will be displayed against method testng 'emailable-report'
     * @param testScreenNamePath File name with path 
+ * @throws IOException IOException
     */
-public static void takeScreenShot(String testScreenNamePath) {
-	
-   	File scrFile = driver.getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File(testScreenNamePath));
-			File tempFile = new File(testScreenNamePath);
-		} catch (IOException ignore) {
-
-		}
+public static void takeScreenShot(String testScreenNamePath) throws IOException {
+   			File scrFile = driver.getScreenshotAs(OutputType.FILE);
+		 		FileUtils.copyFile(scrFile, new File(testScreenNamePath));
+					File tempFile = new File(testScreenNamePath);
+		String src = driver.getScreenshotAs(OutputType.BASE64);
+		String path = "<img src=\"data:image/png;base64, " + src + "\" width=\"400\" height=\"300\" />";
+		Reporter.log(path);
 }
-//private static void Assert(boolean actual, boolean expected) {
-//try
-//{  org.testng.assertEquals(actual,expected)
-//	}
-//catch(Throwable t) {              
-//    org.testng.Assert.fail("expected and actual result do not match");      
-//}
-//
-//	
-//}
+
 /**
  * method to get driver instance  
  * @return driver 

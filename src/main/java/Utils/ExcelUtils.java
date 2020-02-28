@@ -3,34 +3,35 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import Base.AppException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 /** 
- * To read and fetch test data from test data sheet
+ * to read and fetch test data from test data sheet
  */
 public class ExcelUtils {
 	
 	/**
-	 * *In this method we read test data excel file and set the test data values into an array  
+	 * *In this method we read test data excel file and create a hashmap with key value pair  
 	   * @param filePath excel file path reference
-	   * @param fileName file name value
 	   * @param sheetName excel sheet's name value
-	   * @return Excel sheet's test data values
+	   * @return Excel sheet's key value data
 	   * based on 'filePath' and 'property' inputs
+	   * @throws IOException exceptions produced by failed/interrupted I/O operations.
+     *@throws AppException exceptions produced by failure of test events  
 	   */
-	 public ArrayList<String> readExcel(String filePath,String fileName,String sheetName) {
+	 public HashMap<String, String> readExcel(String filePath,String sheetName) throws AppException, IOException {
 		    ArrayList<String> ar = new ArrayList<String>();
-		 try
-		 {
-	    File file =    new File(filePath+"\\"+fileName);
-	    FileInputStream inputStream = new FileInputStream(file);
-	    Workbook workBook = null;
-	    String fileExtensionName = fileName.substring(fileName.indexOf("."));
-
+		    HashMap<String,String> excelFileMap = new HashMap<String,String>();
+	    	File file =    new File(filePath);
+			FileInputStream inputStream = new FileInputStream(file);
+			Workbook workBook = null;
+			String fileExtensionName = filePath.substring(filePath.indexOf("."));
 	    if(fileExtensionName.equals(".xlsx")){
 	    	workBook = new XSSFWorkbook(inputStream);
 	    }
@@ -38,24 +39,18 @@ public class ExcelUtils {
 	    	workBook = new HSSFWorkbook(inputStream);
 	    }
 	    Sheet sheet1 = workBook.getSheet(sheetName);
-	    int rowCount = sheet1.getLastRowNum()-sheet1.getFirstRowNum();
-	    for (int i = 1; i < rowCount+1; i++) {
-
-	        Row row = sheet1.getRow(i);
-	        for (int j = 0; j < row.getLastCellNum(); j++) {
-	        ar.add(row.getCell(j).getStringCellValue());
-	        }
-	   
-	    }
-
-		 }
-		  catch(Exception error)
-		  {
-			  System.out.print("Cause is " +error.getCause());
-			  System.out.print("Message is " +error.getMessage());
-			  error.printStackTrace();
-		  }
-			return ar;
+	    int lastRow = sheet1.getLastRowNum();
+		    for(int i=0; i<=lastRow; i++){
+		    Row row = sheet1.getRow(i);
+		    Cell valueCell = (Cell) row.getCell(1);
+		    Cell keyCell = row.getCell(0);
+		    String value = valueCell.getStringCellValue().trim();
+		    String key = keyCell.getStringCellValue().trim();
+		    excelFileMap.put(key, value);
+		
+		    }
+			 
+			return excelFileMap;
 
 	    }  
  

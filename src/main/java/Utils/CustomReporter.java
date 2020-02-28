@@ -24,7 +24,7 @@ import org.testng.ITestNGMethod;
 import org.testng.xml.XmlSuite;
 
 /**
- * method to get  failed test cases info from testng report
+ * to get  failed test cases info from testng report
  */
 public class CustomReporter implements IReporter{
    
@@ -43,7 +43,7 @@ public class CustomReporter implements IReporter{
              //The Context object of current result
             ITestContext context = results.get(key).getTestContext();
 
-             System.out.println("Test Execution Report Directory - "+context.getOutputDirectory());
+           Log.info("Test Execution Report Directory - "+context.getOutputDirectory());
 
              //Get Map for failed test cases
 
@@ -53,7 +53,7 @@ public class CustomReporter implements IReporter{
             //Loop one by one in all failed methods
             System.out.println("<--------FAILED TEST CASE--------->");
             for (ITestNGMethod iTestNGMethod : failedMethods) {
-                System.out.println("TESTCASE NAME->"+iTestNGMethod.getMethodName() +"\n:Date->"+new Date(iTestNGMethod.getDate()));
+            	Log.info("TESTCASE NAME->"+iTestNGMethod.getMethodName() +"\n:Date->"+new Date(iTestNGMethod.getDate()));
 
             }
 

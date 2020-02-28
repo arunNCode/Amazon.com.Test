@@ -11,10 +11,12 @@ Here are the prerequisites for this test framework setup :
     #TestNG -to have the capabilities to organize test suites and test reports (if following BDD development practice cucumber tool can be used).
     
 	- In this framework we are using Page object design with PageFactory Annotations in the page class.
-    
+
 	- Test script includes testNg Annotations for organizing the test step and to take care of prerequisites.
 
 	- For Test Reporting TestNG report is used.
+
+	- log4j is used for Logging.
 
 Dependent packages for the setup are marked in the pom file. 
 https://github.com/arunNCode/Amazon.com.Test/blob/master/pom.xml
